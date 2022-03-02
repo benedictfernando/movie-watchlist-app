@@ -16,9 +16,9 @@ def prompt_add_movie():
 def print_movie_list(heading, movies):
     print(f"-- {heading} movies --")
     for movie in movies:
-        movie_date = datetime.datetime.fromtimestamp(movie[1])
+        movie_date = datetime.datetime.fromtimestamp(movie[2])
         human_date = movie_date.strftime("%d %b %Y")
-        print(f"{movie[0]} (on {human_date})")
+        print(f"{movie[0]}: {movie[1]} (on {human_date})")  # id: name (on date)
     print("---- \n")
 
 
@@ -29,7 +29,21 @@ def print_watched_movie_list(username, movies):
     print("---- \n")
 
 
+def prompt_show_watched_movies():
+    username = input("Username: ")
+    movies = database.get_watched_movies(username)
+    if movies:
+        print_movie_list("Watched", movies)
+    else:
+        print("That user has watched no movies yet!")
+
+
 def prompt_watch_movie():
     username = input("Username: ")
-    movie_title = input("Enter movie title you've watched: ")
-    database.watch_movie(username, movie_title)
+    movie_id = input("Movie ID: ")
+    database.watch_movie(username, movie_id)
+
+
+def prompt_add_user():
+    username = input("Enter your username: ")
+    database.add_user(username)
