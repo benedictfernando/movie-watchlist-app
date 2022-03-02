@@ -22,6 +22,14 @@ def print_movie_list(heading, movies):
     print("---- \n")
 
 
+def print_watched_movie_list(username, movies):
+    print(f"-- {username}'s watched movies --")
+    for movie in movies:
+        print(f"{movie[1]}")
+    print("---- \n")
+
+
 def prompt_watch_movie():
+    username = input("Username: ")
     movie_title = input("Enter movie title you've watched: ")
-    database.watch_movie(movie_title)
+    database.watch_movie(username, movie_title)
