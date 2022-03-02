@@ -35,6 +35,7 @@ SELECT_WATCHED_MOVIES = """
 """
 INSERT_USER = "INSERT INTO users (username) VALUES (?)"
 SEARCH_MOVIE = """SELECT * FROM movies WHERE title LIKE ?;"""
+CREATE_RELEASE_INDEX = "CREATE INDEX idx_movies_release ON movies(release_timestamp);"
 # SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
 
 
@@ -46,7 +47,7 @@ def search_movies(search_term):
         cursor = connection.cursor()
         cursor.execute(SEARCH_MOVIE, (f"%{search_term}%",))
         return cursor.fetchall()
-        
+
 
 def add_user(username):
     with connection:
@@ -58,6 +59,7 @@ def create_tables():
         connection.execute(CREATE_MOVIES_TABLE)
         connection.execute(CREATE_USERS_TABLE)
         connection.execute(CREATE_WATCHED_TABLE)
+        connection.execute(CREATE_RELEASE_INDEX)
 
 
 def add_movie(title, release_timestamp):
