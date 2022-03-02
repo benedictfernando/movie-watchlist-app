@@ -44,6 +44,11 @@ def prompt_watch_movie():
     database.watch_movie(username, movie_id)
 
 
+def prompt_search_movies():
+    search_term = input("Enter partial movie title: ")
+    return database.search_movies(search_term)
+
+
 def prompt_add_user():
     username = input("Enter your username: ")
     database.add_user(username)

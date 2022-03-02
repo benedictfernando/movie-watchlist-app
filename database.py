@@ -34,11 +34,19 @@ SELECT_WATCHED_MOVIES = """
     WHERE users.username = ?;
 """
 INSERT_USER = "INSERT INTO users (username) VALUES (?)"
+SEARCH_MOVIE = """SELECT * FROM movies WHERE title LIKE ?;"""
 # SET_MOVIE_WATCHED = "UPDATE movies SET watched = 1 WHERE title = ?;"
 
 
 connection = sqlite3.connect("data.db")
 
+
+def search_movies(search_term):
+    with connection:
+        cursor = connection.cursor()
+        cursor.execute(SEARCH_MOVIE, (f"%{search_term}%",))
+        return cursor.fetchall()
+        
 
 def add_user(username):
     with connection:
